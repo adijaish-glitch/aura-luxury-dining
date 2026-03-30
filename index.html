@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA | Vintage Luxury Dining</title>
+    <meta name="description" content="Aura: A modern luxury culinary experience rooted in vintage tradition.">
+    <!-- Fonts: Playfair Display for Serifs, Lato for clean Sans-Serif -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=13">
+</head>
+<body>
+
+    <!-- Transparent Sticky Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="logo">AURA.</a>
+            <ul class="nav-links">
+                <li><a href="#story">Story</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+            </ul>
+            <div class="nav-cta">
+                <a href="#reservation" class="btn-outline-light">Reserve</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Full-screen Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="hero-bg"></div>
+            
+            <!-- Royal Palace Arch Overlay (Flatter, elegant Ironwork & Lanterns) -->
+            <svg class="palace-arch-overlay" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg">
+                <!-- Outer Arch structure mimicking wrought iron / dark stone -->
+                <!-- A gentler quadratic curve so it doesn't cover the text -->
+                <path fill="#1a1a1a" d="M0,0 L1440,0 L1440,120 Q720,-10 0,120 Z" />
+                
+                <!-- Inner geometric ironwork lines -->
+                <path fill="none" class="iron-work gold-trim" stroke-width="3" d="M0,135 Q720,0 1440,135" />
+                <path fill="none" class="iron-work gold-trim-dash" stroke-width="1" stroke-dasharray="10 10" d="M0,150 Q720,15 1440,150" />
+
+                <!-- Left Lantern -->
+                <g transform="translate(360, 40)">
+                    <g class="lantern sway-delay-1">
+                        <line x1="0" y1="0" x2="0" y2="80" stroke="#111" stroke-width="3" stroke-dasharray="6 4" />
+                        <path fill="#111" d="M-15,80 L15,80 L0,60 Z" />
+                        <rect x="-10" y="80" width="20" height="30" fill="rgba(10,10,10,0.8)" stroke="#222" stroke-width="2"/>
+                        <rect x="-5" y="85" width="10" height="20" class="lantern-light" />
+                        <rect x="-15" y="110" width="30" height="4" fill="#111" />
+                    </g>
+                </g>
+
+                <!-- Center Lantern (Main) -->
+                <g transform="translate(720, 10)">
+                    <g class="lantern sway-main">
+                        <line x1="0" y1="0" x2="0" y2="100" stroke="#111" stroke-width="4" stroke-dasharray="8 6" />
+                        <path fill="#111" d="M-20,100 L20,100 L0,70 Z" />
+                        <rect x="-15" y="100" width="30" height="40" fill="rgba(10,10,10,0.8)" stroke="#222" stroke-width="3"/>
+                        <rect x="-7" y="107" width="14" height="26" class="lantern-light" />
+                        <rect x="-20" y="140" width="40" height="6" fill="#111" />
+                    </g>
+                </g>
+
+                <!-- Right Lantern -->
+                <g transform="translate(1080, 40)">
+                    <g class="lantern sway-delay-2">
+                        <line x1="0" y1="0" x2="0" y2="80" stroke="#111" stroke-width="3" stroke-dasharray="6 4" />
+                        <path fill="#111" d="M-15,80 L15,80 L0,60 Z" />
+                        <rect x="-10" y="80" width="20" height="30" fill="rgba(10,10,10,0.8)" stroke="#222" stroke-width="2"/>
+                        <rect x="-5" y="85" width="10" height="20" class="lantern-light" />
+                        <rect x="-15" y="110" width="30" height="4" fill="#111" />
+                    </g>
+                </g>
+
+                <!-- Floral/Vine Silhouettes wrapping the arch -->
+                <path fill="none" stroke="#253825" stroke-width="6" d="M0,120 Q180,60 360,110 T720,20" opacity="0.9"/>
+                <path fill="none" stroke="#253825" stroke-width="6" d="M1440,120 Q1260,60 1080,110 T720,20" opacity="0.9"/>
+                <!-- Additional leaf hints -->
+                <circle cx="280" cy="90" r="7" fill="#253825"/>
+                <circle cx="440" cy="80" r="5" fill="#253825"/>
+                <circle cx="1160" cy="90" r="7" fill="#253825"/>
+                <circle cx="1000" cy="80" r="5" fill="#253825"/>
+            </svg>
+
+            <div class="hero-content fade-in">
+                <h1>Taste the Epoch</h1>
+                <p>Culinary artistry with a vintage soul.</p>
+                <a href="#reservation" class="btn-solid-light mt-4">Book a Table</a>
+            </div>
+            <div class="scroll-indicator">
+                <span>SCROLL</span>
+                <div class="line"></div>
+            </div>
+        </section>
+
+        <!-- Storytelling / About Split Section -->
+        <section id="story" class="section-padding split-section">
+            <div class="container container-split">
+                <div class="split-image slide-in-left">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Chef preparing fine dining dish in vintage kitchen" loading="lazy">
+                </div>
+                <div class="split-text slide-in-right">
+                    <span class="eyebrow">The Heritage</span>
+                    <h2>A Canvas of Time</h2>
+                    <p>At AURA, we believe that luxury lies in simplicity and the passage of time. Our menu is an editorial on tradition, sourcing the finest ingredients from local artisans and presenting them with stark, beautiful minimalism.</p>
+                    <p>It is not just a meal. It is an exploration of the eras that defined culinary perfection, served in a space that feels both nostalgic and breathtakingly modern.</p>
+                    <a href="#menu" class="link-arrow">Discover the Menu</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid-based Menu Section with Hover Effects -->
+        <section id="menu" class="section-padding bg-warm">
+            <div class="container text-center mb-5 fade-in">
+                <span class="eyebrow">Our Offerings</span>
+                <h2>The Collection</h2>
+            </div>
+            <div class="container menu-grid">
+                
+                <div class="menu-item fade-in">
+                    <div class="menu-item-content">
+                        <h4>Aged Wagyu Tartare</h4>
+                        <span class="dots"></span>
+                        <span class="price">$42</span>
+                    </div>
+                    <p>Quail egg, smoked sea salt, vintage mustard, toasted brioche.</p>
+                </div>
+                
+                <div class="menu-item fade-in">
+                    <div class="menu-item-content">
+                        <h4>Heirloom Tomato Consommé</h4>
+                        <span class="dots"></span>
+                        <span class="price">$28</span>
+                    </div>
+                    <p>Basil oil, wild fennel, clarified essence of summer.</p>
+                </div>
+
+                <div class="menu-item fade-in">
+                    <div class="menu-item-content">
+                        <h4>Roasted Venison Loin</h4>
+                        <span class="dots"></span>
+                        <span class="price">$56</span>
+                    </div>
+                    <p>Blackberry reduction, celery root purée, foraged chanterelles.</p>
+                </div>
+
+                <div class="menu-item fade-in">
+                    <div class="menu-item-content">
+                        <h4>Seared Scallops</h4>
+                        <span class="dots"></span>
+                        <span class="price">$48</span>
+                    </div>
+                    <p>Cauliflower silk, brown butter, preserved lemon, capers.</p>
+                </div>
+                
+                <div class="menu-item fade-in">
+                    <div class="menu-item-content">
+                        <h4>Dark Chocolate Marquise</h4>
+                        <span class="dots"></span>
+                        <span class="price">$24</span>
+                    </div>
+                    <p>Gold leaf, espresso caramel, smoked vanilla bean ice cream.</p>
+                </div>
+
+                <div class="menu-item fade-in">
+                    <div class="menu-item-content">
+                        <h4>Poached Pear & Saffron</h4>
+                        <span class="dots"></span>
+                        <span class="price">$22</span>
+                    </div>
+                    <p>Almond crumble, honey yogurt, thyme.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Masonry Image Gallery -->
+        <section id="gallery" class="section-padding">
+            <div class="container text-center mb-5 fade-in">
+                <span class="eyebrow">Visuals</span>
+                <h2>The Atmosphere</h2>
+            </div>
+            <div class="container masonry-gallery">
+                <!-- Using Unsplash for high quality vintage/luxury restaurant vibes -->
+                <div class="masonry-item item-1 fade-in">
+                    <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Elegant Table Setting" loading="lazy">
+                </div>
+                <div class="masonry-item item-2 fade-in">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Fine Dining Dish" loading="lazy">
+                </div>
+                <div class="masonry-item item-3 fade-in">
+                    <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cocktail Mixing" loading="lazy">
+                </div>
+                <div class="masonry-item item-4 fade-in">
+                    <img src="https://images.unsplash.com/photo-1598514982205-f36b96d1e8d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Wine Pour" loading="lazy">
+                </div>
+                <div class="masonry-item item-5 fade-in">
+                    <img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chef Details" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- Centered Reservation CTA Section with Form -->
+        <section id="reservation" class="cta-section section-padding text-center">
+            <div class="container fade-in">
+                <h2>Secure Your Table</h2>
+                <p>An unforgettable vintage dining experience awaits you in the heart of the city.</p>
+                
+                <form id="booking-form" style="max-width: 600px; margin: 40px auto; display: flex; flex-direction: column; gap: 20px;">
+                    <div style="display: flex; gap: 20px;">
+                        <input type="text" id="b-name" placeholder="Full Name" required style="flex:1; padding: 15px; border: 1px solid #ccc; background: transparent; font-family: var(--font-body);">
+                        <input type="email" id="b-email" placeholder="Email Address" required style="flex:1; padding: 15px; border: 1px solid #ccc; background: transparent; font-family: var(--font-body);">
+                    </div>
+                    <div style="display: flex; gap: 20px;">
+                        <input type="date" id="b-date" required style="flex:1; padding: 15px; border: 1px solid #ccc; background: transparent; font-family: var(--font-body);">
+                        <input type="time" id="b-time" required style="flex:1; padding: 15px; border: 1px solid #ccc; background: transparent; font-family: var(--font-body);">
+                    </div>
+                    <textarea id="b-req" placeholder="Special Requests (e.g. Anniversaries, Dietary Restrictions)" rows="3" style="padding: 15px; border: 1px solid #ccc; background: transparent; font-family: var(--font-body);"></textarea>
+                    
+                    <button type="submit" class="btn-solid-dark" style="border:none;">Confirm Reservation</button>
+                    <div id="booking-msg" style="display:none; color: green; margin-top: 10px;"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Clean multi-column footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <h3 class="footer-logo">AURA.</h3>
+                <p>Modern luxury. Vintage soul.</p>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Visit Us</h4>
+                <p>1924 Heritage Avenue<br>New York, NY 10012</p>
+                <a href="#" class="link-arrow">Get Directions</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Inquiries</h4>
+                <p>+1 212 555 0198<br>reservations@aura-dining.com</p>
+            </div>
+
+            <div class="footer-col social-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Pinterest</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 AURA Restaurant. All rights reserved.</p>
+            <p><a href="#">Privacy Policy</a> &nbsp; | &nbsp; <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <div class="rolling-element" id="rolling-pizza"></div>
+
+    <script src="script.js?v=4"></script>
+</body>
+</html>

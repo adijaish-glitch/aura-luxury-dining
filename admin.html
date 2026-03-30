@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA | Admin Dashboard</title>
+    <!-- Reusing AURA Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: var(--color-bg); }
+        .admin-container { max-width: 900px; margin: 50px auto; padding: 40px; }
+        
+        /* Login Screen */
+        .login-box {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 40px;
+            background: white;
+            border: 1px solid rgba(0,0,0,0.1);
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .login-box input { width: 100%; margin-bottom: 20px; text-align: center; }
+        .error-msg { color: #d9534f; font-size: 0.9rem; margin-top: 10px; display: none; }
+        
+        /* Dashboard Screen */
+        #dashboard-view { display: none; }
+        .header-dash { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid var(--color-text); padding-bottom: 20px; margin-bottom: 30px; }
+        .btn-small { padding: 5px 15px; font-size: 0.75rem; border: 1px solid var(--color-text); cursor: pointer; background: transparent; }
+        .btn-small:hover { background: var(--color-text); color: white; }
+        
+        /* Live Booking Table */
+        table { width: 100%; border-collapse: collapse; font-family: var(--font-body); }
+        th, td { text-align: left; padding: 15px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        th { font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; color: #888; border-bottom: 2px solid rgba(0,0,0,0.1); }
+        tr:hover { background-color: var(--color-bg-warm); }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .status-badge.pending { background: #fcf8e3; color: #8a6d3b; }
+        .status-badge.confirmed { background: #dff0d8; color: #3c763d; }
+        
+        .action-link { color: var(--color-text-light); text-decoration: underline; cursor: pointer; font-size: 0.8rem; margin-right: 10px; }
+        .action-link:hover { color: var(--color-text); }
+        
+        .refresh-btn { margin-left: auto; margin-right: 15px; }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN VIEW -->
+    <div id="login-view" class="admin-container">
+        <div class="login-box fade-in">
+            <h2 style="font-size: 2rem; margin-bottom: 10px;">AURA.</h2>
+            <p class="eyebrow">Maitre D' Portal</p>
+            <form id="login-form" style="margin-top: 30px;">
+                <input type="text" id="admin-user" class="elegant-input" placeholder="Username" required>
+                <input type="password" id="admin-pass" class="elegant-input" placeholder="Password" required>
+                <button type="submit" class="btn-solid-dark" style="width: 100%;">Log In</button>
+                <div id="login-error" class="error-msg">Invalid credentials.</div>
+            </form>
+            <p style="margin-top:20px; font-size: 0.7rem; color: #999;">(Hint: admin / admin123)</p>
+        </div>
+    </div>
+
+    <!-- DASHBOARD VIEW -->
+    <div id="dashboard-view" class="admin-container fade-in">
+        <div class="header-dash">
+            <h2>Live Reservations <span id="pulse" style="color:red; font-size:1rem;">●</span></h2>
+            <div>
+                <button id="refresh-btn" class="btn-small refresh-btn">Refresh</button>
+                <button id="logout-btn" class="btn-small">Logout</button>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date / Time</th>
+                    <th>Guest Details</th>
+                    <th>Special Requests</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="bookings-tbody">
+                <!-- Bookings loaded via JS -->
+                 <tr><td colspan="5" style="text-align:center;">Loading live bookings...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000/api';
+        
+        const loginView = document.getElementById('login-view');
+        const dashboardView = document.getElementById('dashboard-view');
+        
+        // Check if already logged in
+        if (localStorage.getItem('aura_admin_token')) {
+            showDashboard();
+        }
+
+        // Login Logic
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = document.getElementById('admin-user').value;
+            const pass = document.getElementById('admin-pass').value;
+            const errorMsg = document.getElementById('login-error');
+
+            try {
+                const res = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+                const data = await res.json();
+                
+                if (data.success && data.token) {
+                    localStorage.setItem('aura_admin_token', data.token);
+                    errorMsg.style.display = 'none';
+                    showDashboard();
+                } else {
+                    errorMsg.style.display = 'block';
+                }
+            } catch (err) {
+                errorMsg.innerText = 'Server error. Is the Node server running?';
+                errorMsg.style.display = 'block';
+            }
+        });
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            localStorage.removeItem('aura_admin_token');
+            loginView.style.display = 'block';
+            dashboardView.style.display = 'none';
+        });
+
+        // Refresh Button
+        document.getElementById('refresh-btn').addEventListener('click', fetchLiveBookings);
+
+        function showDashboard() {
+            loginView.style.display = 'none';
+            dashboardView.style.display = 'block';
+            fetchLiveBookings();
+            
+            // Auto-refresh every 10 seconds for "live" feel
+            setInterval(fetchLiveBookings, 10000);
+        }
+
+        async function fetchLiveBookings() {
+            const token = localStorage.getItem('aura_admin_token');
+            if(!token) return;
+
+            // Simple visual pulse
+            const pulse = document.getElementById('pulse');
+            pulse.style.opacity = '1';
+            setTimeout(()=> pulse.style.opacity = '0.2', 500);
+
+            try {
+                const res = await fetch(`${API_BASE}/bookings`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (res.status === 403 || res.status === 401) {
+                    localStorage.removeItem('aura_admin_token');
+                    window.location.reload();
+                    return;
+                }
+
+                const bookings = await res.json();
+                renderTable(bookings);
+            } catch (err) {
+                console.error("Failed to fetch bookings.", err);
+            }
+        }
+
+        function renderTable(bookings) {
+            const tbody = document.getElementById('bookings-tbody');
+            
+            if (bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No bookings yet for this epoch.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = '';
+            bookings.forEach(b => {
+                const badgeClass = b.status.toLowerCase() === 'confirmed' ? 'confirmed' : 'pending';
+                const actionText = b.status.toLowerCase() === 'confirmed' ? 'Mark Pending' : 'Confirm';
+                const newStatus = b.status.toLowerCase() === 'confirmed' ? 'Pending' : 'Confirmed';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>
+                            <strong>${b.date}</strong><br>
+                            <span style="color:#888;">${b.time}</span>
+                        </td>
+                        <td>
+                            <strong>${b.name}</strong><br>
+                            <a href="mailto:${b.email}" style="color:#888; font-size:0.85rem;">${b.email}</a>
+                        </td>
+                        <td>${b.requests || '-'}</td>
+                        <td><span class="status-badge ${badgeClass}">${b.status}</span></td>
+                        <td>
+                            <a class="action-link" onclick="updateStatus('${b.id}', '${newStatus}')">${actionText}</a>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function updateStatus(id, newStatus) {
+            const token = localStorage.getItem('aura_admin_token');
+            await fetch(`${API_BASE}/bookings/${id}`, {
+                method: 'PATCH',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ status: newStatus })
+            });
+            fetchLiveBookings(); // Reload to show change
+        }
+
+        // Initialize fade-in
+        setTimeout(()=> document.querySelectorAll('.fade-in').forEach(el => el.classList.add('appear')), 100);
+    </script>
+</body>
+</html>
